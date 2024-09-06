@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "${{ env.node_version }}"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
