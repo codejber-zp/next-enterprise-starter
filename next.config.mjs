@@ -10,6 +10,7 @@ const config = withPlugins([[withBundleAnalyzer({ enabled: env.ANALYZE })]], {
   logging: {
     fetches: {
       fullUrl: true,
+      hmrRefreshes: true,
     },
   },
   experimental: { instrumentationHook: true },

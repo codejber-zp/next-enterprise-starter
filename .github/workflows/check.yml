@@ -20,18 +20,20 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "${{ env.node_version }}"
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Lint check
-        run: yarn lint
+        run: pnpm lint
       - name: Format check
-        run: yarn prettier
+        run: pnpm prettier
       - name: Unit & Integration tests
-        run: yarn test
+        run: pnpm test
       - name: Smoke & Acceptance tests
         run: |
-          yarn build-storybook --quiet
-          yarn playwright install
+          pnpm build-storybook --quiet
+          pnpm playwright install --with-deps
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:127.0.0.1:6006 && yarn test-storybook"
+            "npx wait-on tcp:127.0.0.1:6006 && pnpm test-storybook"
